@@ -21,7 +21,10 @@ const Header = ({children}:any) => {
                         <a href="#" title="" className="text-base font-medium text-black transition-all duration-200 hover:text-blue-600 focus:text-blue-600"> Resources </a>
 
                         <a href="#" title="" className="text-base font-medium text-black transition-all duration-200 hover:text-blue-600 focus:text-blue-600"> Pricing </a>
+                        <div>
+
                     <Button className="mb-2 mt-2 mr-5">Log In </Button>
+                        </div>
                     </div>
                 </nav>
 
