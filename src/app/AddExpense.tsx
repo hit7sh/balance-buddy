@@ -29,12 +29,11 @@ const AddExpense = () => {
                     <DropdownMenu>
                     <DropdownMenuTrigger className="bg-white p-1 mt-2 mb-2 rounded-lg">Select Split Type 👇</DropdownMenuTrigger>
                     <DropdownMenuContent>
-                        <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                        <DropdownMenuLabel>Select ⬇️</DropdownMenuLabel>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem>Profile</DropdownMenuItem>
-                        <DropdownMenuItem>Billing</DropdownMenuItem>
-                        <DropdownMenuItem>Team</DropdownMenuItem>
-                        <DropdownMenuItem>Subscription</DropdownMenuItem>
+                        <DropdownMenuItem>Equal</DropdownMenuItem>
+                        <DropdownMenuItem>Manual</DropdownMenuItem>
+                        <DropdownMenuItem>Percentage</DropdownMenuItem>
                     </DropdownMenuContent>
                     </DropdownMenu>
                 </center>
