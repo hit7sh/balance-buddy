@@ -1,9 +1,73 @@
+"use Client"
 import Image from "next/image";
+import Header from "./Header";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { AppSidebar } from "./AppSideBar";
+import { Button } from "@/components/ui/button";
+import FriendCard from "./FriendCard";
+import { Input } from "@/components/ui/input";
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
+    <>
+      <SidebarProvider defaultOpen={false}>
+        <AppSidebar />
+      <main className="w-screen h-screen overflow-hidden">
+      
+        <Header><SidebarTrigger /></Header>
+        
+    <div className="grid grid-cols-12  h-full">
+            <div className="col-span-2">
+              <div className=" bg-slate-50 shadow rounded-lg p-4 m-4">
+                <h3 className="text-lg font-semibold text-gray-800 text-center">Total Paid</h3>
+                <hr className="my-2 border-gray-300" />
+                <p className="text-2xl font-bold text-gray-900 text-center">₹1,234.56</p>
+              </div>
+              <div className=" bg-red-50 shadow rounded-lg p-4 m-4">
+                <h3 className="text-lg font-semibold text-gray-800 text-center">Borrowed</h3>
+                <hr className="my-2 border-gray-300" />
+                <p className="text-2xl font-bold text-gray-900 text-center">₹1,234.56</p>
+              </div>
+              <div className="bg-green-50 shadow rounded-lg p-4 m-4">
+                <h3 className="text-lg font-semibold text-gray-800 text-center">Get Back</h3>
+                <hr className="my-2 border-gray-300" />
+                <p className="text-2xl font-bold text-gray-900 text-center">₹1,234.56</p>
+              </div>
+            </div>
+            <div className="col-span-7 bg-green-200">
+                <h1 className="text-center font-bold text-2xl mt-2 underline">Friends balance</h1>
+
+                <FriendCard />
+              {/* </div> */}
+            </div>
+            <div className="col-span-3 bg-yellow-200">
+                <h3 className="pt-5 text-lg font-semibold text-gray-800 text-center">Get Back</h3>
+                <center>
+                                <Input className="bg-white m-2 w-5/6"></Input>
+                </center>
+                <h3 className="text-lg font-semibold text-gray-800 text-center">Description</h3>
+                <center>
+                                <Input className="bg-white m-2 w-5/6"></Input>
+                </center>
+
+
+                <h3 className="text-lg font-semibold text-gray-800 text-center">Split Type</h3>
+
+                <center>
+                                <Input className="bg-white m-2 w-5/6"></Input>
+                </center>
+
+
+                <center>
+
+                <Button className="mt-2">+ Add Expense</Button>
+                </center>
+            </div>
+        </div>
+        
+      </main>
+    </SidebarProvider>
+      {/* <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
         <Image
           className="dark:invert"
           src="/next.svg"
@@ -14,7 +78,7 @@ export default function Home() {
         />
         <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
           <li className="mb-2">
-            Get started by editing{" "}
+            Get started-by editing{" "}
             <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
               src/app/page.tsx
             </code>
@@ -95,7 +159,7 @@ export default function Home() {
           />
           Go to nextjs.org →
         </a>
-      </footer>
-    </div>
+      </footer> */}
+    </>
   );
 }
