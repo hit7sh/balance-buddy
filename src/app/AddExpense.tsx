@@ -1,3 +1,4 @@
+"use client"
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import {
@@ -8,22 +9,33 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import axios from "axios";
 
-import React from 'react'
+import React, { useState } from 'react'
+import { BACKEND_BASE_URL } from './constants'
 
 const AddExpense = () => {
+  const [addExpenseLoading, setAddExpenseLoading] = useState(false);
+  const [apiResponse, setApiResponse] = useState(null);
+
+  const addExpense = () => {
+    (async () => {
+      setAddExpenseLoading(true);
+      const res = await axios.get(`${BACKEND_BASE_URL}/add-expense`);
+      setApiResponse(res?.data);
+      setAddExpenseLoading(false);
+    })();
+  };
   return (
     <div className="col-span-3 bg-yellow-200">
                 <h3 className="pt-5 text-lg font-semibold text-gray-800 text-center">Select Friends</h3>
                 <center>
-                                <Input className="bg-white m-2 w-5/6"></Input>
+                  <Input className="bg-white m-2 w-5/6"></Input>
                 </center>
                 <h3 className="text-lg font-semibold text-gray-800 text-center">Description</h3>
                 <center>
-                                <Input className="bg-white m-2 w-5/6"></Input>
+                  <Input className="bg-white m-2 w-5/6"></Input>
                 </center>
-                
-
 
                 <center>
                     <DropdownMenu>
@@ -49,7 +61,7 @@ const AddExpense = () => {
 
                 <center>
 
-                <Button className="mt-2">+ Add Expense</Button>
+                <Button className="mt-2" onClick={addExpense}>+ Add Expense</Button>
                 </center>
             </div>
   )

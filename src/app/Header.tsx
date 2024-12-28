@@ -1,7 +1,21 @@
 import { Button } from '@/components/ui/button'
-import React from 'react'
+import { useAuth0 } from '@auth0/auth0-react';
+import React, { useEffect } from 'react'
 
-const Header = ({children}:any) => {
+const Header = ({setUser, setIsAuthenticated, children}:any) => {
+    const {
+    user,
+    loginWithRedirect,
+    isAuthenticated,
+    logout,
+    isLoading,
+} = useAuth0();
+    useEffect(() => {
+        setIsAuthenticated(isAuthenticated);
+        setUser(user);
+    }, [isAuthenticated]);
+
+
     return (
         <header className=" bg-slate-400 lg:pb-0">
             <div className="">
@@ -22,8 +36,26 @@ const Header = ({children}:any) => {
 
                         <a href="#" title="" className="text-base font-medium text-black transition-all duration-200 hover:text-blue-600 focus:text-blue-600"> Pricing </a>
                         <div>
-
-                    <Button className="mb-2 mt-2 mr-5">Log In </Button>
+                    {
+              isAuthenticated ? (
+                <div className="pr-2">{user?.given_name || user?.name || user?.email}
+                  <img className="ml-1 inline-flex bottom-5 right-5 w-6 h-6 rounded-full object-cover"
+                    src={user?.picture}  />
+                  <Button className="m-1 ml-2 mr-1" onClick={() => logout()} variant="secondary">
+                    Log Out
+                  </Button>
+                </div>
+              ) : (
+                    <Button
+                        className="mb-2 mt-2 mr-5"
+                        onClick={() => loginWithRedirect({
+                            authorizationParams: {
+                            connection: 'google-oauth2'
+                            }
+                        })}
+                    >Log In </Button>
+                    )
+                }
                         </div>
                     </div>
                 </nav>
