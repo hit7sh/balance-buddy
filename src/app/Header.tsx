@@ -1,20 +1,30 @@
 import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input';
 import { useAuth0 } from '@auth0/auth0-react';
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
+import Search from './Search';
 
-const Header = ({setUser, setIsAuthenticated, children}:any) => {
+const Header = ({
+    setUser,
+    setIsAuthenticated,
+    children,
+    allUsers,
+    loggedInEmail,
+}:any) => {
+
     const {
-    user,
-    loginWithRedirect,
-    isAuthenticated,
-    logout,
-    isLoading,
-} = useAuth0();
+        user,
+        loginWithRedirect,
+        isAuthenticated,
+        logout,
+        isLoading,
+    } = useAuth0();
+
     useEffect(() => {
         setIsAuthenticated(isAuthenticated);
         setUser(user);
     }, [isAuthenticated]);
-
+    const [value, setValue] = useState("");
 
     return (
         <header className=" bg-slate-400 lg:pb-0">
@@ -26,13 +36,16 @@ const Header = ({setUser, setIsAuthenticated, children}:any) => {
                             Balance Buddy
                         </a>
                     </div>
-
+                    <Search
+                        items={allUsers}
+                        label="name"
+                        id="id"
+                        selectedVal={value}
+                        loggedInEmail={loggedInEmail}
+                        onSearch={(val:any) => setValue(val)}
+                    />
                     <div className="hidden lg:flex lg:items-center lg:ml-auto lg:space-x-10">
                         <a href="#" title="" className="text-base font-medium text-black transition-all duration-200 hover:text-blue-600 focus:text-blue-600"> Features </a>
-
-                        <a href="#" title="" className="text-base font-medium text-black transition-all duration-200 hover:text-blue-600 focus:text-blue-600"> Solutions </a>
-
-                        <a href="#" title="" className="text-base font-medium text-black transition-all duration-200 hover:text-blue-600 focus:text-blue-600"> Resources </a>
 
                         <a href="#" title="" className="text-base font-medium text-black transition-all duration-200 hover:text-blue-600 focus:text-blue-600"> Pricing </a>
                         <div>

@@ -14,14 +14,27 @@ import axios from "axios";
 import React, { useState } from 'react'
 import { BACKEND_BASE_URL } from './constants'
 
-const AddExpense = () => {
+const AddExpense = ({user}:any) => {
   const [addExpenseLoading, setAddExpenseLoading] = useState(false);
   const [apiResponse, setApiResponse] = useState(null);
+  const [friendEmail, setFriendEmail] = useState("");
+  const [description, setDescription] = useState("");
+  const [amount, setAmount] = useState("0");
 
   const addExpense = () => {
     (async () => {
       setAddExpenseLoading(true);
-      const res = await axios.get(`${BACKEND_BASE_URL}/add-expense`);
+      const res = await axios.post(`${BACKEND_BASE_URL}/person/add-expense`, {
+        paidBy: user?.email,
+        description,
+        totalAmt: amount,
+        splitType:"EQUAL",
+        contributors: [
+            {
+            email : friendEmail,
+            }
+        ]
+      });
       setApiResponse(res?.data);
       setAddExpenseLoading(false);
     })();
@@ -30,11 +43,11 @@ const AddExpense = () => {
     <div className="col-span-3 bg-yellow-200">
                 <h3 className="pt-5 text-lg font-semibold text-gray-800 text-center">Select Friends</h3>
                 <center>
-                  <Input className="bg-white m-2 w-5/6"></Input>
+                  <Input className="bg-white m-2 w-5/6" onChange={(e)=>setFriendEmail(e.target.value)}></Input>
                 </center>
                 <h3 className="text-lg font-semibold text-gray-800 text-center">Description</h3>
                 <center>
-                  <Input className="bg-white m-2 w-5/6"></Input>
+                   <Input className="bg-white m-2 w-5/6" onChange={(e)=>setDescription(e.target.value)}></Input>
                 </center>
 
                 <center>
@@ -49,14 +62,11 @@ const AddExpense = () => {
                     </DropdownMenuContent>
                     </DropdownMenu>
                 </center>
-                <h3 className="text-lg font-semibold text-gray-800 text-center">Description</h3>
-                <center>
-                                <Input className="bg-white m-2 w-5/6"></Input>
-                </center>
+                
 
                 <h3 className="text-lg font-semibold text-gray-800 text-center">Amount</h3>
                 <center>
-                                <Input className="bg-white m-2 w-5/6"></Input>
+                  <Input onChange={(e)=>setAmount(e.target.value)} className="bg-white m-2 w-5/6"></Input>
                 </center>
 
                 <center>
