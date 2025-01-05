@@ -1,1 +1,1 @@
-export const BACKEND_BASE_URL = "http://localhost:8083";
+export const BACKEND_BASE_URL = "http://ec2-43-204-235-211.ap-south-1.compute.amazonaws.com:8083";

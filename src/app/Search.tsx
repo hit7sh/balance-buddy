@@ -12,7 +12,7 @@ export default function Search({ items, onSearch, loggedInEmail, }:any) {
     useEffect(() => {
         if (searchTerm) {
             const results = items.filter((item:any) =>
-                item?.name?.toLowerCase().includes(searchTerm.toLowerCase())
+                item?.name?.toLowerCase?.()?.includes?.(searchTerm?.toLowerCase?.())
             );
             setSearchResults(results);
             setIsDropdownOpen(true); // Open dropdown when there are results
