@@ -54,7 +54,7 @@ const SplitDetails = ({
               <div className="flex flex-col items-center bg-green-200 p-2 border-collapse border-2 border-green-500 rounded-lg content-center">
                 <div className="mb-2 underline">Splits</div>
                 <div className="flex">{user?.name}: <Input onChange={(e:any)=>editAmount(user?.email, e.target.value)} className="ml-2 bg-white mb-1 w-[20vh]" type="number" /></div>
-                {selectedFriends.map((friend: any) => <div className="flex mb-1">{friend?.name?.split?.(' ')?.[0]}: <Input onChange={(e:any)=>editAmount(friend?.email, e.target.value)} className="ml-2 bg-white w-[20vh]" type="number" /></div>)}
+                {selectedFriends.map((friend: any) => <div key={friend?.email} className="flex mb-1">{friend?.name?.split?.(' ')?.[0]}: <Input onChange={(e:any)=>editAmount(friend?.email, e.target.value)} className="ml-2 bg-white w-[20vh]" type="number" /></div>)}
               </div>
             )
         }

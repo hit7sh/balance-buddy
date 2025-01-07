@@ -18,7 +18,7 @@ import { Dialog, DialogTrigger } from '@/components/ui/dialog';
 import AddExpenseModal from './add-expense/AddExpenseModal';
 import SimpleCalculator from './SimpleCalculator';
 
-const AddExpense = ({user, friends,}:any) => {
+const AddExpense = ({user, friends, reInitiateHome}:any) => {
   const [addExpenseLoading, setAddExpenseLoading] = useState(false);
   const [apiResponse, setApiResponse] = useState(null);
   const [friendEmail, setFriendEmail] = useState("");
@@ -58,7 +58,11 @@ const AddExpense = ({user, friends,}:any) => {
                 <DialogTrigger asChild>
                   <Button className="m-5 shadow-lg">+ Add Expense</Button>
                                 </DialogTrigger>
-                <AddExpenseModal user={user} friends={friends} />  
+                <AddExpenseModal
+                  user={user}
+                  friends={friends}
+                  reInitiateHome={reInitiateHome}
+                />  
               </Dialog>
                 </center>
           <SimpleCalculator></SimpleCalculator>

@@ -1,6 +1,7 @@
 import { Button } from '@/components/ui/button'
 import { DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
+import ClipLoader from "react-spinners/ClipLoader";
 import React, { useState } from 'react'
 import SelectParticipants from './SelectParticipants'
 import SplitDetails from './SplitDetails'
@@ -9,7 +10,7 @@ import { BACKEND_BASE_URL } from '../constants'
 import axios from 'axios'
 import { toast, ToastContainer } from 'react-toastify'
 
-const AddExpenseModal = ({user, friends,}:any) => {
+const AddExpenseModal = ({user, friends, reInitiateHome}:any) => {
   const items = friends?.map?.((friend:any) => ({name: friend?.name, email: friend?.email, id: friend?.name}));
   const steps = ['Add Participants', 'Add Split Details', 'Review and Submit'];
   const [currentStep, setCurrentStep] = useState(0);
@@ -68,14 +69,17 @@ const AddExpenseModal = ({user, friends,}:any) => {
         splitType: selectedType,
         contributors: contributions?.filter((contributor: any) => contributor?.email !== user?.email),
       });
-      addExpenseApiResponse(res?.data);
+      setAddExpenseApiResponse(res?.data);
+      
       setAddExpenseLoading(false);
+      if ( res?.data === 'SUCCESS') {
+        reInitiateHome();
+      }
       })();
   };
 
   return (
     <DialogContent onCloseAutoFocus={resetStates} className="h-5/6 w-5/6">
-      
         <DialogHeader>
           <DialogTitle>Add Expense</DialogTitle>
           <DialogDescription>
@@ -131,6 +135,7 @@ const AddExpenseModal = ({user, friends,}:any) => {
             )
           }
         </div>
+        {!!addExpenseApiResponse ? (addExpenseApiResponse === 'SUCCESS' ? 'Expense added successfully ✅' : '⚠️Failed to add expense') : (
         <div className="flex mt-auto">
 
             <Button
@@ -153,8 +158,9 @@ const AddExpenseModal = ({user, friends,}:any) => {
               }
             }} className="ml-auto">
               {currentStep < 2 ? 'Next' : 'Submit'}
+              {addExpenseLoading && <ClipLoader color="#ffffff" loading={true} />}
             </Button>
-        </div>
+        </div>)}
       </DialogContent>
   )
 }
