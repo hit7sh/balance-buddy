@@ -3,7 +3,14 @@ import axios from 'axios';
 import React, { useState, useEffect, useRef } from 'react';
 import { BACKEND_BASE_URL } from './constants';
 
-export default function Search({ items, onSearch, loggedInEmail, }:any) {
+export default function Search({
+    items,
+    onSearch,
+    loggedInEmail,
+    friends,
+    setFriends,
+    reInitiateHome,
+}:any) {
     const [searchTerm, setSearchTerm] = useState('');
     const [searchResults, setSearchResults] = useState<any>([]);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -79,7 +86,14 @@ export default function Search({ items, onSearch, loggedInEmail, }:any) {
                         >
                             <div className="flex justify-between">
                                 {result?.name}
-                                <Button onClick={() => axios.post(`${BACKEND_BASE_URL}/person/add-friend/${loggedInEmail}/${result?.email}`)}>Add Friend</Button>
+                                <Button
+                                    disabled={!!friends.find((friend:any) => friend.email === result?.email)}
+                                    onClick={async () => {
+                                        await axios.post(`${BACKEND_BASE_URL}/person/add-friend/${loggedInEmail}/${result?.email}`);
+                                        reInitiateHome();
+                                        setFriends([...friends, {email: result?.email, name: result?.name} ]);
+                                    }}
+                                >Add Friend</Button>
                             </div>
                         </li>
                     ))}

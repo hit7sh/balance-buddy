@@ -10,6 +10,9 @@ const Header = ({
     children,
     allUsers,
     loggedInEmail,
+    friends,
+    reInitiateHome,
+    setFriends,
 }:any) => {
 
     const {
@@ -38,6 +41,9 @@ const Header = ({
                     </div>
                     <Search
                         items={allUsers}
+                        friends={friends}
+                        setFriends={setFriends}
+                        reInitiateHome={reInitiateHome}
                         label="name"
                         id="id"
                         selectedVal={value}
