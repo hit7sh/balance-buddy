@@ -5,6 +5,7 @@ import { BACKEND_BASE_URL } from './constants';
 
 export default function Search({
     items,
+    user,
     onSearch,
     loggedInEmail,
     friends,

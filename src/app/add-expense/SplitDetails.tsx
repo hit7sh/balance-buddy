@@ -5,10 +5,12 @@ import React, { useEffect } from 'react'
 const SplitDetails = ({
     user,
     selectedFriends,
+    description,
     setDescription,
     selectedType,
     setSelectedType,
     setContributions,
+    totalAmount,
     setTotalAmount,
 }: any) => {
   
@@ -33,11 +35,11 @@ const SplitDetails = ({
 
   return ( 
     <div>
-        <div className="text-black flex text-md">Description: <Input className="bg-white ml-2 mb-5 w-5/6" onChange={(e:any) => setDescription(e.target.value)}></Input></div>
+        <div className="text-black flex text-md">Description: <Input className="bg-white ml-2 mb-5 w-5/6"  defaultValue={description} onChange={(e:any) => setDescription(e.target.value)}></Input></div>
         
-        <div className="flex mb-5">Amount: <Input onChange={(e:any)=>setTotalAmount(e.target.value)} className="ml-2 bg-white mb-1" type="number" /></div>
+        <div className="flex mb-5">Amount: <Input value={totalAmount} onChange={(e:any)=>setTotalAmount(e.target.value)} className="ml-2 bg-white mb-1" type="number" /></div>
 
-        <Select onValueChange={(value) => setSelectedType(value)}>
+        <Select onValueChange={(value:any) => setSelectedType(value)}>
           <SelectTrigger className="mb-5">
             <SelectValue placeholder="▼ Select Split Type " />
           </SelectTrigger>

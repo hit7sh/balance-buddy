@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
 const SimpleCalculator = () => {
    const [input, setInput] = useState('');
+  const inputRef = useRef<any>(null);
+  const [isFocused, setIsFocused] = useState(false);
 
   const handleButtonClick = (value:any) => {
     if (value === 'C') {
@@ -26,6 +28,7 @@ const SimpleCalculator = () => {
   };
 
   const handleKeyPress = (event:any) => {
+    if (!isFocused) return;
     const validKeys = '0123456789+-*/.=C%';
     if (validKeys.includes(event.key)) {
       if (event.key === 'C') {
@@ -55,7 +58,7 @@ const SimpleCalculator = () => {
     return () => {
       window.removeEventListener('keydown', handleKeyPress);
     };
-  }, [input]);
+  }, [input, isFocused]);
 
   const buttons = [
     'C', '⌫', '/',
@@ -66,8 +69,17 @@ const SimpleCalculator = () => {
   ];
 
   return (
-    <div className="flex items-center justify-center bg-gray-100">
-      <div className="w-80 p-6 bg-white rounded-lg shadow-lg">
+    <div
+      className="flex items-center justify-center bg-gray-100"
+      onClick={() => inputRef?.current?.focus?.()}
+    >
+      <div
+        ref={inputRef}
+        tabIndex={0}
+        onFocus={() => setIsFocused(true)}
+        onBlur={() => setIsFocused(false)}
+        className="w-80 p-6 bg-white rounded-lg shadow-lg focus:outline-none"
+      >
         <div className="mb-4 text-right text-2xl font-mono text-gray-700 border-b border-gray-300 pb-2">{input || '0'}</div>
         <div className="grid grid-cols-4 gap-2">
           {buttons.map((button) => (

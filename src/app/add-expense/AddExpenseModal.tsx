@@ -1,13 +1,13 @@
 import { Button } from '@/components/ui/button'
 import { DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
-import { Label } from '@radix-ui/react-dropdown-menu'
 import React, { useState } from 'react'
 import SelectParticipants from './SelectParticipants'
 import SplitDetails from './SplitDetails'
 import ReviewExpense from './ReviewExpense'
 import { BACKEND_BASE_URL } from '../constants'
 import axios from 'axios'
+import { toast, ToastContainer } from 'react-toastify'
 
 const AddExpenseModal = ({user, friends,}:any) => {
   const items = friends?.map?.((friend:any) => ({name: friend?.name, email: friend?.email, id: friend?.name}));
@@ -21,6 +21,34 @@ const AddExpenseModal = ({user, friends,}:any) => {
   const [addExpenseLoading, setAddExpenseLoading] = useState(false);
   const [addExpenseApiResponse, setAddExpenseApiResponse] = useState<any>(null);
 
+  const validateScreen = (screenNumber: number): boolean => {
+    switch(screenNumber) {
+      case 0:
+        if (!selectedFriends?.length) toast("⚠️Please select at least one friend");
+        return selectedFriends?.length > 0;
+      case 1:
+        if (selectedType === 'MANUAL') {
+          let sum = 0;
+          contributions.forEach((contribution: any) => sum += Number(contribution?.amount));
+          if (sum != totalAmount) {
+            toast("⚠️Total Sum of splits must be equal to Total Amount");
+            return false;
+          }
+        }
+        if (!description) {
+          toast("⚠️Please enter a description");
+        } else if (!selectedType) {
+          toast("⚠️Please select a split type");
+        } else if (totalAmount <= 0) {
+          toast("⚠️Total Amount must be positive");
+        } else if (!['MANUAL', 'EQUAL'].includes(selectedType)) {
+          toast("⚠️Please select Type of split");
+          return false;
+        }
+        return description && selectedType && totalAmount > 0;
+    }
+    return true;
+  };
   const resetStates = () => {
     setSelectedFriends([]);
     setDescription('');
@@ -47,11 +75,24 @@ const AddExpenseModal = ({user, friends,}:any) => {
 
   return (
     <DialogContent onCloseAutoFocus={resetStates} className="h-5/6 w-5/6">
+      
         <DialogHeader>
           <DialogTitle>Add Expense</DialogTitle>
           <DialogDescription>
             {`Step ${currentStep + 1} • ${steps[currentStep]} `}
           </DialogDescription>
+          <ToastContainer
+        position="top-right"
+        autoClose={10000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
         </DialogHeader>
         <div className="">
           {
@@ -73,6 +114,7 @@ const AddExpenseModal = ({user, friends,}:any) => {
                 selectedType={selectedType}
                 setSelectedType={setSelectedType}
                 contributions={contributions}
+                totalAmount={totalAmount}
                 setContributions={setContributions}
                 setTotalAmount={setTotalAmount}
               />
@@ -100,8 +142,11 @@ const AddExpenseModal = ({user, friends,}:any) => {
               Previous
             </Button>
 
-            <Button type="button" disabled={currentStep === 0 && !selectedFriends?.length} onClick={() => {
+            <Button type="button" onClick={() => {
               if (currentStep < 2) {
+                if (!validateScreen(currentStep)) {
+                  return;
+                }
                 setCurrentStep(currentStep + 1);
               } else {
                 addExpense();
