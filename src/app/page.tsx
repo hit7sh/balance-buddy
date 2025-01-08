@@ -69,7 +69,7 @@ export default function Home() {
           domain={domain||''}
           clientId={clientId||''}
           authorizationParams={{
-            redirect_uri: "http://localhost:4200",
+            redirect_uri: "https://balancebuddy-gold.vercel.app",
           }}
         >
       <SidebarProvider defaultOpen={false}>
