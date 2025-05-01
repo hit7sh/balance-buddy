@@ -13,7 +13,7 @@ const Header = ({
     friends,
     reInitiateHome,
     setFriends,
-}:any) => {
+}: any) => {
 
     const {
         user,
@@ -33,7 +33,7 @@ const Header = ({
         <header className=" bg-slate-400 lg:pb-0">
             <div className="">
                 <nav className="flex items-center justify-between">
-            <span>{children}</span>
+                    <span>{children}</span>
                     <div className="flex-shrink-0">
                         <a href="#" title="" className="flex text-black font-semibold">
                             Balance Buddy
@@ -48,33 +48,33 @@ const Header = ({
                         id="id"
                         selectedVal={value}
                         loggedInEmail={loggedInEmail}
-                        onSearch={(val:any) => setValue(val)}
+                        onSearch={(val: any) => setValue(val)}
                     />
                     <div className="hidden lg:flex lg:items-center lg:ml-auto lg:space-x-10">
-                        <a href="#" title="" className="text-base font-medium text-black transition-all duration-200 hover:text-blue-600 focus:text-blue-600"> Features </a>
+                        {/* <a href="#" title="" className="text-base font-medium text-black transition-all duration-200 hover:text-blue-600 focus:text-blue-600"> Features </a>
 
-                        <a href="#" title="" className="text-base font-medium text-black transition-all duration-200 hover:text-blue-600 focus:text-blue-600"> Pricing </a>
+                        <a href="#" title="" className="text-base font-medium text-black transition-all duration-200 hover:text-blue-600 focus:text-blue-600"> Pricing </a> */}
                         <div>
-                    {
-              isAuthenticated ? (
-                <div className="pr-2">{user?.given_name || user?.name || user?.email}
-                  <img className="ml-1 inline-flex bottom-5 right-5 w-6 h-6 rounded-full object-cover"
-                    src={user?.picture}  />
-                  <Button className="m-1 ml-2 mr-1" onClick={() => logout()} variant="secondary">
-                    Log Out
-                  </Button>
-                </div>
-              ) : (
-                    <Button
-                        className="mb-2 mt-2 mr-5"
-                        onClick={() => loginWithRedirect({
-                            authorizationParams: {
-                            connection: 'google-oauth2'
+                            {
+                                isAuthenticated ? (
+                                    <div className="pr-2">{user?.given_name || user?.name || user?.email}
+                                        <img className="ml-1 inline-flex bottom-5 right-5 w-6 h-6 rounded-full object-cover"
+                                            src={user?.picture} />
+                                        <Button className="m-1 ml-2 mr-1" onClick={() => logout()} variant="secondary">
+                                            Log Out
+                                        </Button>
+                                    </div>
+                                ) : (
+                                    <Button
+                                        className="mb-2 mt-2 mr-5"
+                                        onClick={() => loginWithRedirect({
+                                            authorizationParams: {
+                                                connection: 'google-oauth2'
+                                            }
+                                        })}
+                                    >Log In </Button>
+                                )
                             }
-                        })}
-                    >Log In </Button>
-                    )
-                }
                         </div>
                     </div>
                 </nav>

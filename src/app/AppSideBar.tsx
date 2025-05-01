@@ -8,7 +8,7 @@ import {
     SidebarGroupLabel,
     SidebarHeader,
 } from "@/components/ui/sidebar"
-import { SiGmail, SiLinkedin} from "react-icons/si";
+import { SiGmail, SiLinkedin } from "react-icons/si";
 
 export function AppSidebar() {
     return (
@@ -40,9 +40,9 @@ export function AppSidebar() {
                     <SidebarGroupLabel className="text-black text-lg bg-gray-600 mb-4">Balance Buddy💸</SidebarGroupLabel>
 
                     <SidebarGroupContent>
-                        <div className="pl-1 flex justify-between hover:cursor-pointer rounded-md text-black pt-1 pb-1 bg-slate-300">Friends</div>
+                        {/* <div className="pl-1 flex justify-between hover:cursor-pointer rounded-md text-black pt-1 pb-1 bg-slate-300">Friends</div>
                         <div className="pl-1 flex justify-between hover:cursor-pointer rounded-md text-black pt-1 pb-1 bg-slate-300">Statistics</div>
-                        <div className="pl-1 flex justify-between hover:cursor-pointer rounded-md text-black pt-1 pb-1 bg-slate-300">Activites</div>
+                        <div className="pl-1 flex justify-between hover:cursor-pointer rounded-md text-black pt-1 pb-1 bg-slate-300">Activites</div> */}
 
                     </ SidebarGroupContent>
                 </SidebarGroup>
